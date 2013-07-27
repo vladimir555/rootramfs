@@ -1,0 +1,13 @@
+--- install.py	(original)
++++ install.py	(refactored)
+@@ -19,14 +19,14 @@
+ 
+ 
+ def printList(name, list_):
+-    print name + ":"
++    print(name + ":")
+     for row in list_:
+-        print str(row).replace("\n", "")
++        print(str(row).replace("\n", ""))
+ 
+ 
