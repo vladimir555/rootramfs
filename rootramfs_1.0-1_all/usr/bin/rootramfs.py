@@ -11,13 +11,13 @@ import sys
 
 
 def printList(name, list_):
-    print name + ":"
+    print(name + ":")
     for row in list_:
-        print str(row).replace("\n", "")
+        print(str(row).replace("\n", ""))
 
 
 def executeShellCommand(command):
-    print "exec: " + command
+    print("exec: " + command)
     result_pipe = os.popen(command)
     result_     = result_pipe.readlines()
     result      = []
@@ -71,7 +71,7 @@ def mountSyncFSTab():
         mount = executeShellCommand("mkdir -p /ram/sync" + row_fstab[1] + " && mount -t " + row_fstab[2] +  
                                " /dev/disk/by-uuid/" + row_fstab[0][4:] + " /ram/sync" + row_fstab[1] + " || echo 'mount fail'")
         if len(mount) > 0:
-            print "error: " + str(mount)
+            print("error: " + str(mount))
             exit(1)
 
 
@@ -94,7 +94,7 @@ def umountSyncFSTab():
     for row_umount in fstab_to_umount:
         umount = executeShellCommand("umount " + row_umount)
         if len(umount) > 0:
-            print "error: " + str(umount)
+            print("error: " + str(umount))
             exit(1)
 
 
@@ -168,6 +168,6 @@ if len(sys.argv) >= 3  and  sys.argv[1] == "--diff":
     exit(0)
 
 
-print "usage: rootramfs --sync  sync_path [exclude_path1] [exclude_path2] ..."
-print "usage: rootramfs --reset sync_path [exclude_path1] [exclude_path2] ..."
-print "usage: rootramfs --diff  sync_path [exclude_path1] [exclude_path2] ..."
+print("usage: rootramfs --sync  sync_path [exclude_path1] [exclude_path2] ...")
+print("usage: rootramfs --reset sync_path [exclude_path1] [exclude_path2] ...")
+print("usage: rootramfs --diff  sync_path [exclude_path1] [exclude_path2] ...")

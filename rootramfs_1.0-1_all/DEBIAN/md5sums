@@ -1,0 +1,9 @@
+f42cd183073bcaece2d4e7b0da62d9a2  /usr/share/rootramfs/local.unpatch
+211e436c9f69c9c7917777fc02588fb1  /usr/share/rootramfs/local.patch
+5d8cffa57f561cea1af38c2450c05d7f  /usr/share/rootramfs/install.py
+bbc9bb061f336871d58091dc8a84aac6  /usr/bin/rootramfs.py
+f1bf3a6a3d3dc908f05e43405071b9b8  /DEBIAN/postinst
+399a5c10a82e222bb1e07a6e99450849  /DEBIAN/md5sums
+0180fad639d5372abea1f636664ddcf5  /DEBIAN/changelog
+039ad3061ada34f2548af86760e7c338  /DEBIAN/prerm
+18ad59f6e3b58624612af08ad9ea61b0  /DEBIAN/control

@@ -1,0 +1,10 @@
+Package: rootramfs
+Version: 2012-09-23
+Provides: rootramfs
+Maintainer: volodja <bulaev_vladimir@mail.ru>
+Architecture: all
+Section: admin
+Description: copy system partitions from hdd to ramfs at startup system
+ copy system partition from hdd to ramfs at startup system
+Pre-Depends: rsync, coreutils, cpio, findutils, gzip, util-linux, initramfs-tools, python, grub-pc
+Replaces: linux-image
