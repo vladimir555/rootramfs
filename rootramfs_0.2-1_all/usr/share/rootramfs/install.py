@@ -11,11 +11,12 @@ import sys
 import atexit
 
 
-is_need_restore         = False
-file_name_fstab         = "/etc/fstab"
-file_name_fstab_backup  = "/etc/fstab.rootramfsbackup"
-file_name_hook          = "/usr/share/initramfs-tools/hooks/rootramfshook"
-file_name_loader        = "/scripts/loader"
+is_need_restore             = False
+file_name_fstab             = "/etc/fstab"
+file_name_fstab_rootramfs   = "/etc/fstab.rootramfs"
+file_name_fstab_backup      = "/etc/fstab.rootramfsbackup"
+file_name_hook              = "/usr/share/initramfs-tools/hooks/rootramfshook"
+file_name_loader            = "/scripts/loader"
 
 
 def printList(name, list_):
@@ -208,6 +209,43 @@ def createHook(fstab):
     #создание скрипта initrd-hook, /usr/share/initramfs-tools/hooks/rootramfshook
     #и вставка в него кода для создания скрипта initrd:/scripts/loader
     hook_text = []
+    
+# #!/bin/sh
+# 
+# set -e
+# 
+# PREREQ="cryptroot"
+# 
+# prereqs()
+# {
+# <------>echo "$PREREQ"
+# }
+# 
+# case $1 in
+# prereqs)
+# <------>prereqs
+# <------>exit 0
+# <------>;;
+# esac
+
+    prereq_text = "" 
+    prereq_text = prereq_text + "#!/bin/sh\n"
+    prereq_text = prereq_text + "\n"
+#     prereq_text = prereq_text + "set -e\n\n"
+#     prereq_text = prereq_text + "PREREQ=\"cryptroot\"\n\n"
+#     prereq_text = prereq_text + "prereqs()\n"
+#     prereq_text = prereq_text + "{\n"
+#     prereq_text = prereq_text + "\techo \"$PREREQ\"\n"
+#     prereq_text = prereq_text + "}\n\n"
+#     prereq_text = prereq_text + "case $1 in\n"
+#     prereq_text = prereq_text + "prereqs)\n"
+#     prereq_text = prereq_text + "\tprereqs\n"
+#     prereq_text = prereq_text + "\texit 0\n"
+#     prereq_text = prereq_text + "\t;;\n"
+#     prereq_text = prereq_text + "esac\n\n"
+    
+    hook_text.append(prereq_text)
+    
     hook_text.append('echo "\\n\\' + "\n")
     for row_loader in loader_text:
         hook_text.append(row_loader + '\\n\\' + "\n")
@@ -215,23 +253,40 @@ def createHook(fstab):
     hook_text.append('\n" >    $DESTDIR"' + file_name_loader + '" && ')   # + "\n"
     hook_text.append('chmod +x $DESTDIR"' + file_name_loader + '" && \n') # + "\n"
     
-    hook_text.append(
-''' echo \'74c74,75
-< \tmount ${roflag} ${FSTYPE:+-t ${FSTYPE} }${ROOTFLAGS} ${ROOT} ${rootmnt}
----
-> \t#mount ${roflag} ${FSTYPE:+-t ${FSTYPE} }${ROOTFLAGS} ${ROOT} ${rootmnt}
-> \t/scripts/loader
-' | patch -sf $DESTDIR"/scripts/local" || echo "fail patch"
-''')
-        
+#     hook_text.append(
+# ''' echo \'74c74,75
+# < \tmount ${roflag} ${FSTYPE:+-t ${FSTYPE} }${ROOTFLAGS} ${ROOT} ${rootmnt}
+# ---
+# > \t#mount ${roflag} ${FSTYPE:+-t ${FSTYPE} }${ROOTFLAGS} ${ROOT} ${rootmnt}
+# > \t/scripts/loader
+# ' | patch -sf $DESTDIR"/scripts/local" || echo "fail patch"
+# ''')
+
+    patch_text = ""
+    patch_text = patch_text + "cp \"" + file_name_fstab_rootramfs + "\" \"" + file_name_fstab +"\" && "
+    patch_text = patch_text + "patch -sf $DESTDIR/scripts/local /usr/share/rootramfs/initrd.scripts.local.patch || echo -ne \"SKIP\n\n\""
+    patch_text = patch_text + "patch -sf /usr/share/initramfs-tools/hooks/cryptroot /usr/share/rootramfs/usr.share.initramfs-tools.hooks.cryptroot.patch || echo -ne \"SKIP\n\n\""
+#     patch_text = patch_text + "cp \"" + file_name_fstab_rootramfs + "\" \"" + file_name_fstab +"\""
+#     patch_text = patch_text + " && echo -ne \"" 
+#     patch_text = patch_text + "\x39\x32\x2c\x39\x33\x64\x39\x31"
+#     patch_text = patch_text + "\x0a\x3c\x20\x09\x75\x6d\x6f\x75"
+#     patch_text = patch_text + "\x6e\x74\x20\x24\x7b\x72\x6f\x6f"
+#     patch_text = patch_text + "\x74\x6d\x6e\x74\x7d\x0a\x3c\x20"
+#     patch_text = patch_text + "\x09\x2f\x73\x63\x72\x69\x70\x74"
+#     patch_text = patch_text + "\x73\x2f\x6c\x6f\x61\x64\x65\x72\x0a\""
+#     patch_text = patch_text + " | patch -sf $DESTDIR'/scripts/local' || echo 'fail patch initrd:/scripts/local'"
+
+    hook_text.append(patch_text)
     file_hook.writelines(hook_text)
     
     executeShellCommand("chmod +x " + rootramfshook)
     print("create " + file_name_hook + " OK")
+    #modify cryptsetup cryptroot hook
+    executeShellCommand("patch -sf /usr/share/initramfs-tools/hooks/cryptroot /usr/share/rootramfs/usr.share.initramfs-tools.hooks.cryptroot.patch || echo SKIP")
 
 
 def patchFSTab(fstab):
-    print("patch " + file_name_fstab + " ...")
+    print("create " + file_name_fstab_rootramfs + " ...")
     if not os.path.isfile(file_name_fstab_backup):
         print("backup " + file_name_fstab + " to " + file_name_fstab_backup)
         cp = executeShellCommand("cp " + file_name_fstab + " " + file_name_fstab_backup)
@@ -259,10 +314,10 @@ def patchFSTab(fstab):
             fstab_text_ram.append(row_fstab_text)
 
     fstab_text_ram.append("\n")
-    file_fstab = open(file_name_fstab, "wt")
+    file_fstab = open(file_name_fstab_rootramfs, "wt")
     file_fstab.writelines(fstab_text_ram)
-    print("patch " + file_name_fstab + " OK")
-    #printList("fstab_text_ram", fstab_text_ram)
+    print("create " + file_name_fstab_rootramfs + " OK")
+    #printList("fstab_text_ram_rootramfs", fstab_text_ram_rootramfs)
 
 
 def restore():
@@ -271,10 +326,11 @@ def restore():
     if os.path.isfile(file_name_fstab_backup):
         print("restore  " + file_name_fstab_backup + " to " + file_name_fstab)
         mv = executeShellCommand("mv " + file_name_fstab_backup + " " + file_name_fstab)
+        executeShellCommand("patch -sf /usr/share/initramfs-tools/hooks/cryptroot /usr/share/rootramfs/usr.share.initramfs-tools.hooks.cryptroot.unpatch")
         if len(mv) > 0:
             print("error restore " + file_name_fstab + ": " + str(mv))
         else:
-            executeShellCommand("/usr/bin/rootramfs --sync /etc/fstab")
+            executeShellCommand("/usr/bin/rootramfs.py --sync /")
 
     if os.path.isfile(file_name_hook):
         print("remove " + file_name_hook)

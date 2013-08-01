@@ -1,5 +1,5 @@
-74c74,75
+91c91,92
 < 	mount ${roflag} ${FSTYPE:+-t ${FSTYPE} }${ROOTFLAGS} ${ROOT} ${rootmnt}
 ---
 > 	#mount ${roflag} ${FSTYPE:+-t ${FSTYPE} }${ROOTFLAGS} ${ROOT} ${rootmnt}
-> 	./loader.sh
+> 	/scripts/loader

@@ -1,0 +1,9 @@
+22c22,23
+< 	if [ ! -r /etc/fstab ]; then
+---
+> 	FSTAB="/etc/fstab.rootramfsbackup"
+> 	if [ ! -r $FSTAB ]; then
+26c27
+< 	grep -s '^[^#]' /etc/fstab | \
+---
+> 	grep -s '^[^#]' $FSTAB | \

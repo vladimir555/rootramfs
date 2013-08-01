@@ -7,7 +7,6 @@ __author__ = 'volodja'
 import os
 import re
 import sys
-#import getpass
 
 
 def printList(name, list_):
