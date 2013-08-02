@@ -1,7 +1,7 @@
 f97b8e6eb8d19c394ea81034bb8af94c  usr/share/rootramfs/initrd.scripts.local.patch
 f562e5ea07a5f4bc6e760dc2d35c5f0c  usr/share/rootramfs/usr.share.initramfs-tools.hooks.cryptroot.unpatch
 e5a3c8e304de70d917bbcdccc437c688  usr/share/rootramfs/usr.share.initramfs-tools.hooks.cryptroot.patch
-3c9e40560b2d8f754f6d22beb4fc9952  usr/share/rootramfs/install.py
+8ecf6c61b38d4914f19a2ed862a7f59e  usr/share/rootramfs/install.py
 30e66db14c53d90215e1cd85a355fc98  usr/bin/rootramfs.py
 039ad3061ada34f2548af86760e7c338  DEBIAN/prerm
 e385b9a046e194489673b266bcf61719  DEBIAN/changelog

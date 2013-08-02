@@ -1,5 +1,5 @@
 Package: rootramfs
-Version: 2013-07-28
+Version: 0.2
 Provides: rootramfs
 Maintainer: volodja <bulaev_vladimir@mail.ru>
 Architecture: all

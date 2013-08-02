@@ -264,8 +264,8 @@ def createHook(fstab):
 
     patch_text = ""
     patch_text = patch_text + "cp \"" + file_name_fstab_rootramfs + "\" \"" + file_name_fstab +"\" && "
-    patch_text = patch_text + "patch -sf $DESTDIR/scripts/local /usr/share/rootramfs/initrd.scripts.local.patch || echo -ne \"SKIP\n\n\""
-    patch_text = patch_text + "patch -sf /usr/share/initramfs-tools/hooks/cryptroot /usr/share/rootramfs/usr.share.initramfs-tools.hooks.cryptroot.patch || echo -ne \"SKIP\n\n\""
+    patch_text = patch_text + "patch -sf $DESTDIR/scripts/local /usr/share/rootramfs/initrd.scripts.local.patch || echo \"SKIP\n\""
+    patch_text = patch_text + "patch -sf /usr/share/initramfs-tools/hooks/cryptroot /usr/share/rootramfs/usr.share.initramfs-tools.hooks.cryptroot.patch || echo \"SKIP\n\""
 #     patch_text = patch_text + "cp \"" + file_name_fstab_rootramfs + "\" \"" + file_name_fstab +"\""
 #     patch_text = patch_text + " && echo -ne \"" 
 #     patch_text = patch_text + "\x39\x32\x2c\x39\x33\x64\x39\x31"
@@ -282,7 +282,7 @@ def createHook(fstab):
     executeShellCommand("chmod +x " + rootramfshook)
     print("create " + file_name_hook + " OK")
     #modify cryptsetup cryptroot hook
-    executeShellCommand("patch -sf /usr/share/initramfs-tools/hooks/cryptroot /usr/share/rootramfs/usr.share.initramfs-tools.hooks.cryptroot.patch || echo SKIP")
+    executeShellCommand("patch -sf /usr/share/initramfs-tools/hooks/cryptroot /usr/share/rootramfs/usr.share.initramfs-tools.hooks.cryptroot.patch || echo \"SKIP\n\"")
 
 
 def patchFSTab(fstab):
@@ -326,7 +326,8 @@ def restore():
     if os.path.isfile(file_name_fstab_backup):
         print("restore  " + file_name_fstab_backup + " to " + file_name_fstab)
         mv = executeShellCommand("mv " + file_name_fstab_backup + " " + file_name_fstab)
-        executeShellCommand("patch -sf /usr/share/initramfs-tools/hooks/cryptroot /usr/share/rootramfs/usr.share.initramfs-tools.hooks.cryptroot.unpatch")
+        executeShellCommand("rm " + file_name_fstab_rootramfs)
+        executeShellCommand("patch -sf /usr/share/initramfs-tools/hooks/cryptroot /usr/share/rootramfs/usr.share.initramfs-tools.hooks.cryptroot.unpatch || echo \"SKIP\n\"")
         if len(mv) > 0:
             print("error restore " + file_name_fstab + ": " + str(mv))
         else:
