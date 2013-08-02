@@ -7,4 +7,4 @@ Section: admin
 Description: copy system partitions from hdd to ramfs at startup system
  copy system partition from hdd to ramfs at startup system
 Pre-Depends: rsync, coreutils, cpio, findutils, gzip, util-linux, initramfs-tools, python, grub-pc
-Replaces: linux-image
+Replaces: linux-image, cryptsetup

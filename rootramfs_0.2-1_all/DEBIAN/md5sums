@@ -5,6 +5,6 @@ e5a3c8e304de70d917bbcdccc437c688  usr/share/rootramfs/usr.share.initramfs-tools.
 30e66db14c53d90215e1cd85a355fc98  usr/bin/rootramfs.py
 039ad3061ada34f2548af86760e7c338  DEBIAN/prerm
 e385b9a046e194489673b266bcf61719  DEBIAN/changelog
-3391b31d37a33b231e0750ba0311ba7d  DEBIAN/control
+cdb58ba36be454fa2963ae156d85cd1b  DEBIAN/control
 f1bf3a6a3d3dc908f05e43405071b9b8  DEBIAN/postinst
 d41d8cd98f00b204e9800998ecf8427e  DEBIAN/md5sums
