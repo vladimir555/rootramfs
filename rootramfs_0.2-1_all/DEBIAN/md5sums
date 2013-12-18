@@ -1,10 +1,10 @@
+f1bf3a6a3d3dc908f05e43405071b9b8  DEBIAN/postinst
+039ad3061ada34f2548af86760e7c338  DEBIAN/prerm
+cdb58ba36be454fa2963ae156d85cd1b  DEBIAN/control
+d41d8cd98f00b204e9800998ecf8427e  DEBIAN/md5sums
+e385b9a046e194489673b266bcf61719  DEBIAN/changelog
+6e2f19636aaa45079858782df04055d7  usr/bin/rootramfs.py
 f97b8e6eb8d19c394ea81034bb8af94c  usr/share/rootramfs/initrd.scripts.local.patch
+8ecf6c61b38d4914f19a2ed862a7f59e  usr/share/rootramfs/install.py
 f562e5ea07a5f4bc6e760dc2d35c5f0c  usr/share/rootramfs/usr.share.initramfs-tools.hooks.cryptroot.unpatch
 e5a3c8e304de70d917bbcdccc437c688  usr/share/rootramfs/usr.share.initramfs-tools.hooks.cryptroot.patch
-8ecf6c61b38d4914f19a2ed862a7f59e  usr/share/rootramfs/install.py
-30e66db14c53d90215e1cd85a355fc98  usr/bin/rootramfs.py
-039ad3061ada34f2548af86760e7c338  DEBIAN/prerm
-e385b9a046e194489673b266bcf61719  DEBIAN/changelog
-cdb58ba36be454fa2963ae156d85cd1b  DEBIAN/control
-f1bf3a6a3d3dc908f05e43405071b9b8  DEBIAN/postinst
-d41d8cd98f00b204e9800998ecf8427e  DEBIAN/md5sums
