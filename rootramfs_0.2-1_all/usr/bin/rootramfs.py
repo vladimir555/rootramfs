@@ -101,14 +101,16 @@ def syncCommand(args, command_, is_reverse = False):
     paths       = []
 
     for row_args in args:
-        paths.append(os.path.abspath(row_args))
+        if row_args != "--exclude":
+            paths.append(os.path.abspath(row_args))
 
     if is_reverse:
-        dst = paths[0]
         src = "/ram/sync" + paths[0]
+        dst = paths[0]
     else:
         src = paths[0]
         dst = "/ram/sync" + paths[0]
+
 
     if os.path.isdir(paths[0]):
         src     = src + "/"
@@ -127,6 +129,7 @@ def syncCommand(args, command_, is_reverse = False):
     command     = command + "--exclude '/selinux' "
     command     = command + "--exclude '/ram' "
     command     = command + "--exclude '/boot' "
+
 
     for row_paths in paths:
         command = command + "--exclude '" + row_paths + "' "
