@@ -1,4 +1,4 @@
 rootramfs
 =========
 
-copy root fs in ram on boot system
+copy root fs to ram on boot system
