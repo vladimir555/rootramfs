@@ -4,7 +4,7 @@ if [ ! -d "$1" ]; then
 fi
 current_dir="$PWD"
 cd $1 &&
-find -type f -exec md5sum {} \; | awk -F'  ./' '{print $1"  "$2}' > DEBIAN/md5sums &&
+find -type f -exec md5sum {} \; | grep -v "DEBIAN/" | awk -F'  ./' '{print $1"  "$2}' > DEBIAN/md5sums &&
 cd "$current_dir" &&
 dpkg --build "$1" &&
 echo DONE && exit 0 ||

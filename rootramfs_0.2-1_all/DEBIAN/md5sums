@@ -1,8 +1,3 @@
-f1bf3a6a3d3dc908f05e43405071b9b8  DEBIAN/postinst
-039ad3061ada34f2548af86760e7c338  DEBIAN/prerm
-cdb58ba36be454fa2963ae156d85cd1b  DEBIAN/control
-d41d8cd98f00b204e9800998ecf8427e  DEBIAN/md5sums
-e385b9a046e194489673b266bcf61719  DEBIAN/changelog
 bfbeb23b15bcf80e9c2b6958de352197  usr/bin/rootramfs.py
 f97b8e6eb8d19c394ea81034bb8af94c  usr/share/rootramfs/initrd.scripts.local.patch
 8ecf6c61b38d4914f19a2ed862a7f59e  usr/share/rootramfs/install.py
