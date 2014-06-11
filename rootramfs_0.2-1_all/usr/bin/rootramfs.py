@@ -134,7 +134,7 @@ def syncCommand(args, command_, is_reverse = False):
     for row_paths in paths:
         command = command + "--exclude '" + row_paths + "' "
 
-    command     = command + "\"" + src + "\" \"" + dst + "\" | grep -v 'xfer#' > /dev/tty && sync"
+    command     = command + "\"" + src + "\" \"" + dst + "\" | grep -v 'xfer#' | grep -v 'xfr#' > /dev/tty && sync"
     rsync       = executeShellCommand(command)
     #printList(command_, rsync)
 
