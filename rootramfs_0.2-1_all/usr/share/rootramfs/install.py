@@ -33,6 +33,7 @@ def executeShellCommand(command):
     result      = []
     for line in result_:
         result.append(line.replace('\n', ''))
+    printList("result", result)
     return result
 
 
@@ -64,14 +65,21 @@ def readBlkID():
     for line in blkid_result:
         row = line.replace(":", "").replace("\"", "").replace("UUID=", "").replace("TYPE=", "") .split(" ")
         row.remove('')
+
+        row_result = []
+        for column in row:
+            if column[0:6] != "LABEL=":
+                row_result.append(column)
+        row = row_result
+                
         blkid.append(row)
 
     if len(blkid) == 0:
         print("error: empty blkid result")
         exit(1)
 
-    #printList("blkid", blkid)
     print("read blkid devices OK")
+    printList("blkid", blkid)
     return blkid
 
 
@@ -362,9 +370,13 @@ if len(sys.argv) == 3:
         if dpkg_command == "configure":
             is_need_restore = True
             fstab = readFSTab()
+            printList("fstab", fstab)
             fstab = selectSystemFSTab(fstab)
+            printList("fstab", fstab)
             fstab = convertFSTabToUUIDFSTab(fstab)
+            printList("fstab", fstab)
             fstab = addDevicesSizeColumnToFSTab(fstab)
+            printList("fstab", fstab)
 
             createHook(fstab)
             patchFSTab(fstab)
